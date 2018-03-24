@@ -11,6 +11,11 @@ urlpatterns = [
     url(r'studentlist/$',views.studentList, name='studentlist'),
     url(r'listallstudents/$',views.allStudentList, name='studentlist'),
     url(r'listallteachers/$',views.teacherList, name='teacherlist'),
-    url(r'listallschools/$',views.allSchoolList, name='teacherlist'),
-    url(r'profile/$',views.profile, name='teacherlist'),
+    url(r'listallschools/$',views.allSchoolList, name='schoollist'),
+    url(r'profile/$',views.profile, name='profile'),
+    url(r'listregisteredstudents/$',views.registeredStudents, name='registeredstudents'),
+    url(r'report/$',views.report, name='report'),
+    url(r'changepassword/$',views.changePassword, name='changepassword'),
+    
+#     url(r'^password/$', views.change_password, name='change_password'),
 ]

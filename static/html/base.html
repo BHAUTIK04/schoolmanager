@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Index</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+  	.form-signin {
+        width: 100%;
+  /*max-width: 330px;*/
+        padding: 0px;
+        margin: 0 auto;
+    }
+    .form-signin .checkbox {
+      font-weight: 400;
+    }
+    .form-signin .form-control {
+      position: relative;
+      box-sizing: border-box;
+      height: auto;
+      padding: 10px;
+      font-size: 16px;
+    }
+    .form-signin .form-control:focus {
+      z-index: 2;
+    }
+    #bdate{
+    	color:black;
+    }
+    </style>
+</head>
+<body style="background-color: #123456; color:#FFFFFF" >
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid" style="background-color:#123456">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">School Manager</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+        {% if role == 1 %}
+          <li><a href="/listallschools">List All School</a></li>
+          <li><a href="/createuser">Create School Account</a></li>
+        {% endif %}
+        {% if role == 2 %}
+          <li><a href="/listallteachers">List All Teacher</a></li>
+          <li><a href="/listallstudents">List All Student</a></li>
+          <li><a href="/createuser">Create New Account</a></li>
+        {% endif %}
+        {% if role == 3 %}
+          <li><a href="/listregisteredstudents">List All Student</a></li>
+          <li><a href="/progress">Progress</a></li>
+        {% endif %}
+        {% if role == 4 %}
+          <li><a href="/report">Courses</a></li>
+          <li><a href="/progress">Progress</a></li>
+        {% endif %}
+      </ul>
+      <ul class="nav navbar-nav pull-right">
+        <li><a href="/password">Change passwod</a></li>
+        <li><a href="/profile">Profile</a></li>
+        <li><a href="/logout/" >Logout</a></li>
+
+      </ul>
+      </div>
+    </div>
+  </nav>
+{% block content %}
+{% endblock %}
+
+
+</body>
+</html>

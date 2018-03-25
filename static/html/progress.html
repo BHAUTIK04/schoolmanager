@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container" style="width:100%;margin-top:50px;padding-left:50px; padding-right:50px;">
+    {% if role == 3 %}
+      <h2 style="text-align:center;"><b>Student Progress</b></h2>
+      <center>
+        <div id="result" class = "alert-dismissible hide">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong id="str"></strong>
+        </div>
+      </center>
+      <div>
+        <span class="label label-success">{{class}}</span>
+        <span class="label label-success">{{subject}}</span>
+        <span class="label label-success">{{year}}</span>
+    </div><br>
+      <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>User Name</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <!-- <th >Email</th> -->
+              {% for i in exams %}
+
+                <th colspan="3">{{i}}
+                </th>
+              {% endfor %}
+              <td>Edit</td>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in students %}
+              <tr>
+                <td id={{i.username}} class="username">{{i.username}}</td>
+                <td>{{i.first_name}}</td>
+                <td>{{i.last_name}}</td>
+                <!-- <td>{{i.email}}</td> -->
+                {% for j,k in i.progress.items %}
+                    <td>{{k.date}}</td>
+                    <td>{{k.total_marks}}</td>
+                    <td contenteditable="false" class="obtained" id={{j}}>{{k.obtained}}</td>
+
+                {% endfor %}
+                <td>
+                  <button class="btn btn-sm btn-default edit">Edit</button>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+      {% if role == 4 %}
+        <h2 style="text-align:center;"><b>Progress Report</b></h2>
+        {% if marks %}
+          {% for i in marks %}
+
+            <h3><label class="label label-success">{{i.subject}}</label>
+            <label class="label label-success">{{i.class_name}}</label>
+            <label class="label label-success">{{i.year}}</label></h3>
+            <br>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Date</th>
+                  <th>Total</th>
+                  <th>Obtained</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for j,k in i.exams.items %}
+
+                  <tr>
+                    <td><b>{{j|title}}</b></td>
+                    <td>{{k.date}}</td>
+                    <td>{{k.total_marks}}</td>
+                    <td>{{k.obtained}}</td>
+                  </tr>
+                {% endfor %}
+              <tbody>
+            </table>
+
+          {% endfor %}
+        {% endif %}
+      {% endif %}
+</div>
+<script>
+$(document).ready(function () {
+        $('.edit').click(function () {
+            var currentTD = $(this).parents('tr').find('.obtained');
+            if ($(this).html() == 'Edit') {
+                currentTD = $(this).parents('tr').find('.obtained');
+                $.each(currentTD, function () {
+                    $(this).prop('contenteditable', true)
+                    $(this).css('background-color',"white");
+                    $(this).css('color',"black");
+                });
+            } else {
+              var obj = new Object();
+              obj["student_id"] = $(this).closest('tr').find(".username").text();
+              $.each(currentTD, function () {
+                  obj[$(this).attr('id')] = $(this).text();
+              });
+              $.post("/editmarks/", obj)
+                       .done(function(string) {
+                         response = string
+                         if(response["status"]=="success"){
+                           $("#result").removeClass("hide");
+                           $("#result").addClass("alert alert-success");
+                           $("#str").html("Successfully updated");
+                         }
+                         else if(response["status"]=="error"){
+                           $("#result").addClass("alert alert-danger");
+                           $("#str").html("Not Updated!! Please try after sometimes.");
+                         }
+                       });
+              console.log(JSON.stringify(obj));
+               $.each(currentTD, function () {
+                    $(this).prop('contenteditable', false);
+                    $(this).css('background-color',"#123456");
+                    $(this).css('color',"white");
+                });
+            }
+
+            $(this).html($(this).html() == 'Edit' ? 'Save' : 'Edit')
+
+        });
+
+    });
+
+</script>
+{% endblock %}

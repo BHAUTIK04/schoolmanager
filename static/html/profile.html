@@ -1,108 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>{{title}}</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-</head>
-<body style="background-color: #123456; color:#FFFFFF" >
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-	  <div class="container-fluid" style="background-color:#123456">
-	    <div class="navbar-header">
-	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	      </button>
-	      <a class="navbar-brand" href="/">School Manager</a>
-	    </div>
-	    <div class="collapse navbar-collapse" id="myNavbar">
-	    <ul class="nav navbar-nav">
-	      <li><a href="/">Home</a></li>
-	      {% if role == 1 %}
-	      	<li><a href="/listallschools">List All School</a></li>
-	      	<li><a href="/createuser">Create School Account</a></li>
-	      {% endif %}
-	      {% if role == 2 %}
-	      	<li><a href="/listallteachers">List All Teacher</a></li>
-	      	<li><a href="/listallstudents">List All Student</a></li>
-	      	<li><a href="/createuser">Create New Account</a></li>
-	      	<!-- <li><a href="/createuser">Create Student Account</a></li> -->
-	      {% endif %}
-	      {% if role == 3 %}
-          <li><a href="/listregisteredstudents">List All Student</a></li>
-	      	<!-- <li><a href="/classlist">Class list</a></li>
-	      	<li><a href="/classlist">Student list</a></li> -->
-	      	<!-- <li><a href="/createuser">Create Student Account</a></li> -->
-	      {% endif %}
-        {% if role == 4 %}
-          <li><a href="/report">Courses</a></li>
-	      {% endif %}
-	    </ul>
-	    <ul class="nav navbar-nav pull-right">
-	    	<li class="active"><a href="#">Profile</a></li>
-	    	<li><a href="/logout/" >Logout</a></li>
-
-	    </ul>
-	    </div>
-	  </div>
-	</nav>
-<div class="container" style="width:100%;margin-top:50px">
-  	<h3 style="text-align:center;"><b>PROFILE</b></h3>
-    <!-- <div class="container">
-      <p>{{message}}</p>
-      <button id="changepassword" class="btn btn-danger pull-right">CHANGE PASSWORD</button><br><br>
-      <form id = "changepasswordform" class="form-signin hide" action="/changepassword/" method="post">
-
-	      <input name= "currentpassword"  type="password" id="currentPassword" class="form-control" placeholder="Current Password" required>
-        <br>
-	      <input name= "newpassword1"  type="password" id="newPassword1" class="form-control" placeholder="New Password" required>
-        <br>
-	      <input name= "newpassword2"  type="password" id="newPassword2" class="form-control" placeholder="Retype New Password" required>
-        <br>
-        <button class="btn btn-success">Submit</button>
-      </form>
-    </div><br><br> -->
+{% extends 'base.html' %}
+{% block content %}
+<div class="container" style="width:100%;margin-top:50px;padding-left:50px; padding-right:50px;">
+  	<h2 style="text-align:center;"><b>PROFILE</b></h2>
     <div>
-    	<table class="table table-bordered">
-        <thead>
-          <tr>
+      <div>
+        <label>Username:</label>
+        <h3>{{userdata.username}}</h3>
+      </div><hr>
+      {% if role == 3 or role == 4 %}
+        <div>
+          <label>First Name:</label>
+          <h3>{{userdata.fname}}</h3>
+        </div><hr>
+        <div>
+          <label>Last Name:</label>
+          <h3>{{userdata.lname}}</h3>
+        </div><hr>
+        <div>
+          <label>Birthdate:</label>
+          <h3>{{userdata.birth_date}}</h3>
+        </div><hr>
+        <div>
+          <label>gender:</label>
+          <h3>{{userdata.sex}}</h3>
+        </div><hr>
+      {% endif %}
+      <div>
+        <label>Email:</label>
+        <h3>{{userdata.email}}</h3>
+      </div><hr>
+      {% if role == 3 %}
+      <div>
+        <label>Contact Number:</label>
+        <h3>{{userdata.teacher_cntc_1}}, {{userdata.teacher_cntc_2}}</h3>
+      </div><hr>
+      <div>
+        <label>Qualification</label>
+        <h3>{{userdata.qualification}}</h3>
+      </div><hr>
+      <div>
+        <label>Expertise</label>
+        <h3>{{userdata.expertise}}</h3>
+      </div><hr>
+      {% endif %}
+      {% if role == 4 %}
+      <div>
+        <label>Student Contact Number:</label>
+        <h3>{{userdata.student_cntc_1}}</h3>
+      </div><hr>
+      <div>
+        <label>Parent Contact Details:</label>
+        <h3>{{userdata.email_parent}}, {{userdata.parent_cntc_1}}, {{userdata.parent_cntc_2}}</h3>
+      </div><hr>
+      {% endif %}
+      {% if role == 2 %}
+      <div>
+        <label>School Code:</label>
+        <h3>{{userdata.schoolcode}}</h3>
+      </div><hr>
+      <div>
+        <label>School Name:</label>
+        <h3>{{userdata.schoolname}}</h3>
+      </div><hr>
+      <div>
+        <label>No. of Teachers:</label>
+        <h3>{{userdata.teachers}}</h3>
+      </div><hr>
+      <div>
+        <label>No. of Students:</label>
+        <h3>{{userdata.students}}</h3>
+      </div><hr>
+      {% endif %}
+      <div>
+        <label>Address:</label>
+        <h3>{{userdata.address}}, {{userdata.city}}, {{userdata.pincode}}</h3>
+      </div><hr>
 
-            <th>Field</th>
-            <th>Value</th>
-            <!--<th>Last Name</th>
-            <th>Email</th>
-            <th>Date Joined</th>
-            <th>Still Studing</th>
-            <th>Gender</th> -->
-          </tr>
-        </thead>
-        <tbody>
-        	{% for i,j in userdata.items %}
-        		<tr>
-          			<td>{{i}}</td>
-          			<td>{{j}}</td>
-          		</tr>
-          	{% endfor %}
-
-        </tbody>
-      </table>
     </div>
 </div>
-<script>
-  $(document).ready(function(){
-    $("#changepassword").click(function(){
-      if($("#changepasswordform").hasClass("hide")){
-        $("#changepasswordform").removeClass("hide");
-      }else{
-        $("#changepasswordform").addClass("hide");
-      }
-    });
-  })
-</script>
-</body>
-</html>
+{% endblock %}

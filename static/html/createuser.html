@@ -1,92 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Registration</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <style>
-  	.form-signin {
-  width: 100%;
-  /*max-width: 330px;*/
-  padding: 0px;
-  margin: 0 auto;
-}
-.form-signin .checkbox {
-  font-weight: 400;
-}
-.form-signin .form-control {
-  position: relative;
-  box-sizing: border-box;
-  height: auto;
-  padding: 10px;
-  font-size: 16px;
-}
-.form-signin .form-control:focus {
-  z-index: 2;
-}
-#bdate{
-	color:black;
-}
-/* .form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}  */
-  </style>
-</head>
-<body style="background-color: #123456; color:#FFFFFF" >
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-	  <div class="container-fluid" style="background-color:#123456">
-	    <div class="navbar-header">
-	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	      </button>
-	      <a class="navbar-brand" href="/">School Manager</a>
-	    </div>
-	    <div class="collapse navbar-collapse" id="myNavbar">
-	    <ul class="nav navbar-nav">
-	      <li><a href="/">Home</a></li>
-	      {% if role == 1 %}
-	      	<li><a href="/listallschools">List All School</a></li>
-	      	<li class="active"><a href="/createuser">Create School Account</a></li>
-	      {% endif %}
-	      {% if role == 2 %}
-	      	<li><a href="/listallteachers">List All Teacher</a></li>
-	      	<li><a href="/listallstudents">List All Student</a></li>
-	      	<li class="active"><a href="/createuser">Create New Account</a></li>
-	      	<!-- <li><a href="/createuser">Create Student Account</a></li> -->
-	      {% endif %}
-	      {% if role == 3 %}
-	      	<li><a href="/classlist">Class list</a></li>
-	      	<li><a href="/studentlist">Student list</a></li>
-	      	<!-- <li><a href="/createuser">Create Student Account</a></li> -->
-	      {% endif %}
-	    </ul>
-
-	    <ul class="nav navbar-nav pull-right">
-	    	{% if role == 2 %}
-	    		<li><a href="/profile">Profile</a></li>
-	    	{% endif %}
-	    	<li><a href="/logout/" >Logout</a></li>
-
-	    </ul>
-
-	    </div>
-	  </div>
-	</nav>
-
-
-  	<div class="text-center container" style="width:100%;margin-top:50px">
+{% extends 'base.html'%}
+{% block content %}
+  	<div class="text-center container" style="margin-top:5%" >
   	{% if username %}
 		<h5>{{message}}</h5>
 	{% endif %}
@@ -153,9 +67,9 @@
 	    {% if role == 2%}
 		    <div id = "teachercntcno" class="form-group hide">
 		    	<label>Contact No. 1</label>
-		    	<input name= "cntc 1"  type="text" id="schoolcode" class="form-control" placeholder="Contact no. 1" >
+		    	<input name= "teacher_cntc_1"  type="text" id="schoolcode" class="form-control" placeholder="Contact no. 1" >
 		    	<label>Contact No. 2</label>
-		    	<input name= "cntc 2"  type="text" id="schoolcode" class="form-control" placeholder="Contact no. 2 " >
+		    	<input name= "teacher_cntc_2"  type="text" id="schoolcode" class="form-control" placeholder="Contact no. 2 " >
 		    	<label>Qualification</label>
 		    	<input name= "qualification"  type="text" id="qualification" class="form-control" placeholder="Qualification" >
 		    	<label>Expertise</label>
@@ -163,11 +77,11 @@
 		    </div>
 		    <div id = "studentcntcno" class="form-group hide">
 		    	<label>Student Cntc No.</label>
-		    	<input name= "cntc1"  type="text" id="schoolcode" class="form-control" placeholder="Student Cntc No." >
+		    	<input name= "student_cntc_1"  type="text" id="schoolcode" class="form-control" placeholder="Student Cntc No." >
 		    	<label>Parent Cntc No. 1</label>
-		    	<input name= "cntc2"  type="text" id="schoolcode" class="form-control" placeholder="Parent Cntc No. 1" >
+		    	<input name= "parent_cntc_1"  type="text" id="schoolcode" class="form-control" placeholder="Parent Cntc No. 1" >
 		    	<label>Parent Cntc No. 2</label>
-		    	<input name= "cntc2"  type="text" id="schoolcode" class="form-control" placeholder="Parent Cntc No. 2 " >
+		    	<input name= "parent_cntc_2"  type="text" id="schoolcode" class="form-control" placeholder="Parent Cntc No. 2 " >
 		    	<label>Parent Email</label>
 		      	<input name= "email_parent"  type="email" id="email" class="form-control" placeholder="Parent Email" >
 		    </div>
@@ -183,8 +97,8 @@
 		$(document).ready(function(){
 
 		    $('#student').click(function(){
-				      $("#teachercntcno").addClass("hide");
-				      $("#studentcntcno").removeClass("hide");
+				$("#teachercntcno").addClass("hide");
+				$("#studentcntcno").removeClass("hide");
 		    });
 		    $('#teacher').click(function(){
 		    	$("#studentcntcno").addClass("hide");
@@ -193,6 +107,4 @@
 
 		});
 	</script>
-
-</body>
-</html>
+{% endblock %}
